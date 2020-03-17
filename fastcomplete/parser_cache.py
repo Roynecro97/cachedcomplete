@@ -32,7 +32,6 @@ def save_cache(*args):
     os.makedirs(CACHE_DIR, exist_ok=True)
 
     cache_file = get_cache_filename()
-
     if os.path.isfile(cache_file):
         return
 
@@ -47,7 +46,6 @@ def load_cache():
         ``None`` in case the cache is empty.
     '''
     cache_file = get_cache_filename()
-
     if not os.path.isfile(cache_file):
         return
 
@@ -75,7 +73,7 @@ def _calc_hash():
 
     try:
         return subprocess.check_output(
-            fr"find {files} -type f -\! -name '*.pyc' -print0 | xargs -0 cat | md5sum | awk '{{ print $1 }}'",
+            r"find {} -type f -\! -name '*.pyc' -print0 | xargs -0 cat | md5sum | awk '{{ print $1 }}'".format(files),
             shell=True, stderr=devnull).decode().strip()
     finally:
         if USING_PYTHON2:
