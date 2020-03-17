@@ -1,10 +1,14 @@
 import argcomplete
-import os
 
 from functools import wraps
 
 from .parser_cache import save_cache, load_cache
 
+def identity(string):
+    '''
+    identity function to path problems with argparse.
+    '''
+    return string
 
 def cached_complation_finder(completion_finder_cls):
     '''
@@ -15,9 +19,10 @@ def cached_complation_finder(completion_finder_cls):
 
     @wraps(completion_finder_cls, updated=())
     class CachedCompletionFinder(completion_finder_cls):
-        def __call__(self, *args, **kwargs):
-            parser_cache.save_cache(args, kwargs)
-            return super().__call__(*args, **kwargs)
+        def __call__(self, argument_parser, *args, **kwargs):
+            argument_parser.register('type', None, identity)
+            parser_cache.save_cache(argument_parser, args, kwargs)
+            return super().__call__(argument_parser, *args, **kwargs)
     
     return CachedCompletionFinder
 
@@ -27,4 +32,5 @@ autocomplete.__doc__ = argcomplete.autocomplete.__doc__
 
 loaded_cache = parser_cache.load_cache()
 if loaded_cache is not None:
-    autocomplete(*loaded_cache)
+    parser, args, kwargs = loaded_cache
+    autocomplete(parser, *args, **kwargs)
