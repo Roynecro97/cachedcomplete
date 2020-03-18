@@ -9,9 +9,10 @@ Use the package manager pip to install cachedcomplete.
 
 ```bash
 pip install cachedcomplete
+activate-global-python-argcomplete
 ```
 
-## Explenation
+## Explanation
 
 cachedcomplete wraps argcomplete, and allows caching of its parsers
 in order to save up time.
@@ -112,12 +113,12 @@ add a comment with the wanted files and the prefix CACHEDCOMPLETE_HASH:
 It also allows multiple files split to multiple comments, or within one comment.
 
 ```python
-# CACHEDCOMPLETE_HASH: file1.py, file2.py
+# CACHEDCOMPLETE_HASH: file1.py file2.json
 # CACHEDCOMPLETE_HASH: file3.py
-# CACHEDCOMPLETE_HASH: "file with spaces.py"
+# CACHEDCOMPLETE_HASH: "file with spaces.txt"
 ```
 
-And is also allows passing up a directory to track all the files within
+And also allows passing up a directory to track all the files within
 
 ```python
 # CACHEDCOMPLET_HASH: dir
