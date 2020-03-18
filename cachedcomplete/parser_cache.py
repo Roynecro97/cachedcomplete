@@ -13,7 +13,7 @@ else:
     import pickle
 
 
-CACHE_DIR = '/tmp/.fastcomplete'
+CACHE_DIR = '/tmp/.cachedcomplete'
 CACHE_FILE = os.path.join(CACHE_DIR, '{file}-{hash}')
 
 
