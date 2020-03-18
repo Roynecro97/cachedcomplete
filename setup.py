@@ -8,14 +8,14 @@ if os.path.exists(README_PATH):
         long_description = fd.read()
 
 setuptools.setup(
-    name="fastcomplete",
+    name="cachedcomplete",
     version="0.0.1",
     author="",
     author_email="",
     description="Fast semi-static autocomplete for python",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/Roynecro97/fastcomplete",
+    url="https://github.com/Roynecro97/cachedcomplete",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

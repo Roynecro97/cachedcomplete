@@ -10,7 +10,7 @@ from itertools import chain
 
 
 SEARCH_RANGE = 1024
-INFO_PREFIX = 'FASTCOMPLETE_'
+INFO_PREFIX = 'CACHEDCOMPLETE_'
 FILES_TO_HASH_INFO = INFO_PREFIX + r'HASH:\s*(?P<files>.*)$'
 
 # Path to the main script
