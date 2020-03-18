@@ -17,8 +17,9 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/Roynecro97/cachedcomplete',
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(exclude=['test']),
     platforms=['MacOS X', 'Posix'],
+    test_suite='test',
     classifiers=[
         'Environment :: Console',
         'Intended Audience :: Developers',
