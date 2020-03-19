@@ -1,7 +1,10 @@
 '''
 Cache for saving python objects based on source code hashes.
 '''
+from __future__ import print_function
+
 import os
+import sys
 import subprocess
 from argcomplete import USING_PYTHON2
 from .main_script import MAIN_FILE_PATH, get_files_to_hash
@@ -31,6 +34,7 @@ def save_cache(*args):
     :type args: Anything that can be saved using pickle.
     '''
     if not main_script_exists():
+        print("warning: refusing to cache: cannot find the main script's file", file=sys.stderr)
         return
 
     if not os.path.isdir(CACHE_DIR):
