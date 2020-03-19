@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # PYTHON_ARGCOMPLETE_OK
 # CACHEDCOMPLETE_HASH: ~/.bashrc ~/.bash_aliases
 # CACHEDCOMPLETE_HASH: ~/.bash_logout ./i-dont-exist
