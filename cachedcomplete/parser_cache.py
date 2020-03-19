@@ -29,7 +29,8 @@ def save_cache(*args):
     :param args: The objects saved in the cache.
     :type args: Anything that can be saved using pickle.
     '''
-    os.makedirs(CACHE_DIR, exist_ok=True)
+    if not os.path.isdir(CACHE_DIR):
+        os.makedirs(CACHE_DIR)
 
     cache_file = get_cache_filename()
     if os.path.isfile(cache_file):
