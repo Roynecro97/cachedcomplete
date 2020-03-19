@@ -17,8 +17,15 @@ activate-global-python-argcomplete
 cachedcomplete wraps argcomplete, and allows caching of its parsers
 in order to save up time.
 
-Cachedcomplete re-caches everytime a change was made in itself,
+cachedcomplete re-caches every time a change was made in itself,
 or in the files specified by the user.
+
+cachedcomplete caches the parsers using pickle, which implies the parser
+must be able to be serialized and de-serialized using pickle.
+
+Without any interference argparse's parsers cannot be serialized using pickle,
+because the default type is defined within the parser's `__init__` function.
+cachedcomplete replaces the default type with a identical type that can be pickled.
 
 ## Usage
 
@@ -121,15 +128,15 @@ It also allows multiple files split to multiple comments, or within one comment.
 And also allows passing up a directory to track all the files within
 
 ```python
-# CACHEDCOMPLET_HASH: dir
+# CACHEDCOMPLETE_HASH: dir
 ```
 
 ### Using custom types, completers, actions, etc...
 
 In order to cache a parser that uses your own custom types and functions,
-they must be defined in a seperate module than the main script (that defines the parser).
+they must be defined in a separate module than the main script (that defines the parser).
 
-_**Note:** It is recommended to add these seperate modules to the tracked files (As specified with `CACHEDCOMPLETE_HASH`)._
+_**Note:** It is recommended to add these separate modules to the tracked files (As specified with `CACHEDCOMPLETE_HASH`)._
 
 **Example:**
 
