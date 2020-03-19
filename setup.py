@@ -12,7 +12,7 @@ setuptools.setup(
     version='0.0.1',
     author='',
     author_email='',
-    description='Fast semi-static autocomplete for python',
+    description='Cached wrapper for python argcomplete',
     license='MIT License',
     long_description=long_description,
     long_description_content_type='text/markdown',

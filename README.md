@@ -1,7 +1,7 @@
 
 # cachedcomplete
 
-Fast semi-static autocomplete for python
+Cached wrapper for python argcomplete.
 
 ## Installation
 
@@ -123,4 +123,3 @@ And also allows passing up a directory to track all the files within
 ```python
 # CACHEDCOMPLET_HASH: dir
 ```
-
