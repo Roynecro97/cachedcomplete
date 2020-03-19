@@ -6,7 +6,13 @@ import re
 import sys
 import shlex
 
+from argcomplete import USING_PYTHON2
 from itertools import chain
+
+if USING_PYTHON2:
+    from pipes import quote
+else:
+    quote = shlex.quote
 
 
 SEARCH_RANGE = 1024
@@ -27,7 +33,7 @@ def _get_info_list(expr):
 
 
 def _expand(filename):
-    return shlex.quote(os.path.abspath(os.path.expanduser(os.path.expandvars(filename))))
+    return quote(os.path.abspath(os.path.expanduser(os.path.expandvars(filename))))
 
 
 def get_files_to_hash():
