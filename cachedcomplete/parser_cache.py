@@ -5,6 +5,7 @@ import os
 import subprocess
 from argcomplete import USING_PYTHON2
 from .main_script import MAIN_FILE_PATH, get_files_to_hash
+from .main_script import exists as main_script_exists
 
 # Use the optimized C version for pickle
 if USING_PYTHON2:
@@ -29,6 +30,9 @@ def save_cache(*args):
     :param args: The objects saved in the cache.
     :type args: Anything that can be saved using pickle.
     '''
+    if not main_script_exists():
+        return
+
     if not os.path.isdir(CACHE_DIR):
         os.makedirs(CACHE_DIR)
 
@@ -46,6 +50,9 @@ def load_cache():
         The objects that were loaded from the saved cache.
         ``None`` in case the cache is empty.
     '''
+    if not main_script_exists():
+        return
+
     cache_file = get_cache_filename()
     if not os.path.isfile(cache_file):
         return

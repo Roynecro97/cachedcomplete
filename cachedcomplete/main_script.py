@@ -20,7 +20,11 @@ INFO_PREFIX = 'CACHEDCOMPLETE_'
 FILES_TO_HASH_INFO = INFO_PREFIX + r'HASH:\s*(?P<files>.*)$'
 
 # Path to the main script
-MAIN_FILE_PATH = os.path.abspath(sys.argv[0])
+if sys.argv[0] != '-c':
+    MAIN_FILE_PATH = os.path.abspath(sys.argv[0])
+else:
+    # Running as `python -c "commands"`
+    MAIN_FILE_PATH = None
 
 
 def _get_info_list(expr):
@@ -37,4 +41,14 @@ def _expand(filename):
 
 
 def get_files_to_hash():
+    '''
+    :return: an iterable of all the files and directories that should be hashed.
+    '''
     return chain([MAIN_FILE_PATH, os.path.dirname(__file__)], (_expand(filename) for filename in _get_info_list(FILES_TO_HASH_INFO)))
+
+
+def exists():
+    '''
+    :return: ``True`` if the main script exists, otherwise ``False`` (as when ran with `python -c`).
+    '''
+    return MAIN_FILE_PATH is not None and os.path.exists(MAIN_FILE_PATH)
