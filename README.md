@@ -1,4 +1,3 @@
-
 # cachedcomplete
 
 Cached wrapper for python argcomplete.
@@ -25,7 +24,9 @@ must be able to be serialized and de-serialized using pickle.
 
 Without any interference argparse's parsers cannot be serialized using pickle,
 because the default type is defined within the parser's `__init__` function.
-cachedcomplete replaces the default type with a identical type that can be pickled.
+cachedcomplete replaces the default type with an identical type that can be pickled
+(this is only done when cachedcomplete detects that the default type is still the default
+identity function).
 
 ## Usage
 
@@ -140,7 +141,7 @@ _**Note:** It is recommended to add these separate modules to the tracked files 
 
 **Example:**
 
-*Won't work:*
+_Won't work:_
 
 In `my_awesome_script.py`
 
@@ -160,7 +161,7 @@ p.add_argument('settings', type=json_file)
 cachedcomplete.autocomplete(p)
 ```
 
-*Will Work:*
+_Will work:_
 
 In `my_awesome_type.py`
 
