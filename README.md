@@ -26,11 +26,11 @@ or in the files specified by the user.
 
 The normal usage is the same as in argcomplete, only changing the import from argcomplete to cachedcomplete.
 
-_Note: The usage of PYTHON_ARGCOMPLETE_OK stays the same as in argcomplete_
+_**Note:** The usage of `PYTHON_ARGCOMPLETE_OK` stays the same as in argcomplete_
 
 #### For Example
 
-##### Using argcomplete
+**Using argcomplete:**
 
 ```python
 # PYTHON_ARGCOMPLETE_OK
@@ -41,7 +41,7 @@ import argcomplete
 argcomplete.autocomplete()
 ```
 
-##### Using cachedcomplete
+**Using cachedcomplete:**
 
 ```python
 # PYTHON_ARGCOMPLETE_OK
@@ -59,7 +59,7 @@ a usage of the decorator cached_completion_finder is required.
 
 #### For example
 
-##### Using argcomplete
+**Using argcomplete:**
 
 ```python
 import argcomplete
@@ -72,7 +72,7 @@ completion_finder = CustomCompletionFinder()
 completion_finder()
 ```
 
-##### Using cachedcomplete
+**Using cachedcomplete:**
 
 ```python
 import argcomplete
@@ -87,7 +87,7 @@ completion_finder = CustomCompletionFinder()
 completion_finder()
 ```
 
-###### or
+**or:**
 
 ```python
 import argcomplete
@@ -122,4 +122,59 @@ And also allows passing up a directory to track all the files within
 
 ```python
 # CACHEDCOMPLET_HASH: dir
+```
+
+### Using custom types, completers, actions, etc...
+
+In order to cache a parser that uses your own custom types and functions,
+they must be defined in a seperate module than the main script (that defines the parser).
+
+_**Note:** It is recommended to add these seperate modules to the tracked files (As specified with `CACHEDCOMPLETE_HASH`)._
+
+**Example:**
+
+*Won't work:*
+
+In `my_awesome_script.py`
+
+```python
+# PYTHON_ARGCOMPLETE_OK
+
+import argparse
+import cachedcomplete
+import json
+
+def json_file(arg):
+    with argparse.FileType()(arg) as f:
+        return json.load(f)
+
+p = argparse.ArgumentParser()
+p.add_argument('settings', type=json_file)
+cachedcomplete.autocomplete(p)
+```
+
+*Will Work:*
+
+In `my_awesome_type.py`
+
+```python
+import json
+
+def json_file(arg):
+    with argparse.FileType()(arg) as f:
+        return json.load(f)
+```
+
+In `my_awesome_script.py`
+
+```python
+# PYTHON_ARGCOMPLETE_OK
+# CACHEDCOMPLETE_HASH: my_awesome_type.py
+
+import argparse
+import cachedcomplete
+
+p = argparse.ArgumentParser()
+p.add_argument('settings', type=json_file)
+cachedcomplete.autocomplete(p)
 ```
