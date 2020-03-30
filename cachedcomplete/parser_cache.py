@@ -50,7 +50,7 @@ def save_cache(*args):
 
 def load_cache():
     '''
-    :return: 
+    :return:
         The objects that were loaded from the saved cache.
         ``None`` in case the cache is empty.
     '''

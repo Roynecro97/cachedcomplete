@@ -9,7 +9,7 @@ if os.path.exists(README_PATH):
 
 setuptools.setup(
     name='cachedcomplete',
-    version='0.0.1',
+    version='1.0.0',
     author='',
     author_email='',
     description='Cached wrapper for python argcomplete',
