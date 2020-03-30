@@ -25,11 +25,22 @@ def cached_complation_finder(completion_finder_cls):
 
     @wraps(completion_finder_cls, assigned=__CLASS_WRAPPER_ASSIGNMENTS, updated=())
     class CachedCompletionFinder(completion_finder_cls):
-        def __call__(self, argument_parser, *args, **kwargs):
+        @staticmethod
+        def __fix_default_type(argument_parser):
+            '''
+            Fix the default un-pickle-able argument type.
+            '''
             argument_parser.register('type', None, identity)
+            if argument_parser._subparsers is not None:
+                for group_action in argument_parser._subparsers._group_actions:
+                    for parser in group_action.choices.values():
+                        CachedCompletionFinder.__fix_default_type(parser)
+
+        def __call__(self, argument_parser, *args, **kwargs):
+            CachedCompletionFinder.__fix_default_type(argument_parser)
             save_cache(argument_parser, args, kwargs)
             return super(CachedCompletionFinder, self).__call__(argument_parser, *args, **kwargs)
-    
+
     return CachedCompletionFinder
 
 
