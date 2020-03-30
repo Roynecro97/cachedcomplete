@@ -30,7 +30,9 @@ def cached_complation_finder(completion_finder_cls):
             '''
             Fix the default un-pickle-able argument type.
             '''
-            argument_parser.register('type', None, identity)
+            if 'ArgumentParser.__init__.<locals>.identity' in repr(argument_parser._registry_get('type', None, default='')):
+                argument_parser.register('type', None, identity)
+
             if argument_parser._subparsers is not None:
                 for group_action in argument_parser._subparsers._group_actions:
                     for parser in group_action.choices.values():
