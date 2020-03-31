@@ -132,6 +132,22 @@ And also allows passing up a directory to track all the files within
 # CACHEDCOMPLETE_HASH: dir
 ```
 
+Using environment variables and user directories is also allowed:
+
+```python
+# CACHEDCOMPLETE_HASH: $HOME/.cache/my-cache /tmp/${USERNAME}.ini
+# CACHEDCOMPLETE_HASH: ~/.cache/my-cache ~gdm/greeter-dconf-defaults
+```
+
+Paths are relative to the calling script, not the current working directory.
+
+cachedcomplete adds an environment variable name `pwd` to allow accessing the current
+working directory in the comments. If this variable was already set, it is **not** overwritten.
+
+```python
+# CACHEDCOMPLETE_HASH: $pwd/local-file
+```
+
 ### Using custom types, completers, actions, etc...
 
 In order to cache a parser that uses your own custom types and functions,
