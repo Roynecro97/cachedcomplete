@@ -65,7 +65,7 @@ def load_cache():
         with open(cache_file, 'rb') as cache:
             return pickle.load(cache)
     except:
-        # Delete the cahe if we couldn't read it, so that next time
+        # Delete the cache if we couldn't read it, so that next time
         # we complete there's a cache.
         os.unlink(cache_file)
 
@@ -83,10 +83,15 @@ def _calc_hash():
 
     files = ' '.join(get_files_to_hash())
 
+    old_pwd = os.path.abspath(os.curdir)
     try:
+        if MAIN_FILE_PATH is not None:
+            os.chdir(os.path.dirname(MAIN_FILE_PATH))
+
         return subprocess.check_output(
-            r"find {} -type f -\! -name '*.pyc' -print0 | xargs -0 cat | md5sum | awk '{{ print $1 }}'".format(files),
+            r"find {} -type f -\! -name '*.pyc' -print0 | sort -zu | xargs -0 cat | md5sum | awk '{{ print $1 }}'".format(files),
             shell=True, stderr=devnull).decode().strip()
     finally:
+        os.chdir(old_pwd)
         if USING_PYTHON2:
             devnull.close()

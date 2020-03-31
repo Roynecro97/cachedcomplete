@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # PYTHON_ARGCOMPLETE_OK
-# CACHEDCOMPLETE_HASH: ~/.bashrc ~/.bash_aliases
-# CACHEDCOMPLETE_HASH: ~/.bash_logout ./i-dont-exist
+# CACHEDCOMPLETE_HASH: ~/.bashrc $HOME/.bash_aliases
+# CACHEDCOMPLETE_HASH: ${HOME}/.bash_logout ./i-dont-exist
 # CACHEDCOMPLETE_HASH: "./damn space"
 
 import argparse
