@@ -19,9 +19,19 @@ SEARCH_RANGE = 1024
 INFO_PREFIX = 'CACHEDCOMPLETE_'
 FILES_TO_HASH_INFO = INFO_PREFIX + r'HASH:\s*(?P<files>.*)$'
 
+def _skip_easy_install(filename):
+    '''
+    Handle easyinstall files by returning their wrapped file instead.
+    '''
+    import inspect
+
+    main_file_frame = [frame for frame in inspect.stack() if frame.filename == filename][-1]
+    return main_file_frame.frame.f_globals.get('__file__', filename)
+
 # Path to the main script
 if sys.argv[0] != '-c':
-    MAIN_FILE_PATH = os.path.abspath(sys.argv[0])
+    MAIN_FILE_PATH = os.path.abspath(_skip_easy_install(sys.argv[0]))
+
 else:
     # Running as `python -c "commands"`
     MAIN_FILE_PATH = None
