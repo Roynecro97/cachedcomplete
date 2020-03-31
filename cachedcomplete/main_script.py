@@ -1,5 +1,5 @@
 '''
-Gets values fron special comments in the first 1024 bytes of the main script.
+Gets values from special comments in the first 1024 bytes of the main script.
 '''
 import os
 import re
@@ -37,13 +37,14 @@ def _get_info_list(expr):
 
 
 def _expand(filename):
-    return quote(os.path.abspath(os.path.expanduser(os.path.expandvars(filename))))
+    return quote(os.path.expanduser(os.path.expandvars(filename)))
 
 
 def get_files_to_hash():
     '''
     :return: an iterable of all the files and directories that should be hashed.
     '''
+    os.environ.setdefault('pwd', os.path.abspath(os.curdir))
     return chain([MAIN_FILE_PATH, os.path.dirname(__file__)], (_expand(filename) for filename in _get_info_list(FILES_TO_HASH_INFO)))
 
 
