@@ -7,8 +7,12 @@ from .parser_cache import save_cache, load_cache
 if argcomplete.USING_PYTHON2:
     # Don't override __doc__ with wraps because it's read-only in python2
     __CLASS_WRAPPER_ASSIGNMENTS = tuple(filter(lambda attr: attr != '__doc__', WRAPPER_ASSIGNMENTS))
+
+    _ARGPARSE_LOCAL_IDENTITY_NAME = 'identity'
 else:
     __CLASS_WRAPPER_ASSIGNMENTS = WRAPPER_ASSIGNMENTS
+
+    _ARGPARSE_LOCAL_IDENTITY_NAME = 'ArgumentParser.__init__.<locals>.identity'
 
 def identity(string):
     '''
@@ -30,7 +34,7 @@ def cached_complation_finder(completion_finder_cls):
             '''
             Fix the default un-pickle-able argument type.
             '''
-            if 'ArgumentParser.__init__.<locals>.identity' in repr(argument_parser._registry_get('type', None, default='')):
+            if _ARGPARSE_LOCAL_IDENTITY_NAME in repr(argument_parser._registry_get('type', None, default='')):
                 argument_parser.register('type', None, identity)
 
             if argument_parser._subparsers is not None:
