@@ -4,7 +4,7 @@ import os
 README_PATH = 'README.md'
 
 if os.path.exists(README_PATH):
-    with open(README_PATH, 'r', encoding='utf-8') as fd:
+    with open(README_PATH, 'r') as fd:
         long_description = fd.read()
 
 setuptools.setup(
