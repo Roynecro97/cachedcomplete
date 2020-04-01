@@ -25,8 +25,13 @@ def _skip_easy_install(filename):
     '''
     import inspect
 
-    main_file_frame = [frame for frame in inspect.stack() if frame.filename == filename][-1]
-    return main_file_frame.frame.f_globals.get('__file__', filename)
+    # Python3 changed the tuple to an object with named fields.
+    if USING_PYTHON2:
+        main_file_frame = [stack_frame[0] for stack_frame in inspect.stack() if stack_frame[1] == filename][-1]
+    else:
+        main_file_frame = [stack_frame.frame for stack_frame in inspect.stack() if stack_frame.filename == filename][-1]
+
+    return main_file_frame.f_globals.get('__file__', filename)
 
 # Path to the main script
 if sys.argv[0] != '-c':

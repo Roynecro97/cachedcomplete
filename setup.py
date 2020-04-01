@@ -9,7 +9,7 @@ if os.path.exists(README_PATH):
 
 setuptools.setup(
     name='cachedcomplete',
-    version='1.0.2',
+    version='1.0.3',
     url='https://github.com/Roynecro97/cachedcomplete',
     project_urls={
         "Source Code": 'https://github.com/Roynecro97/cachedcomplete'
