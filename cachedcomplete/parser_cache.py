@@ -3,10 +3,13 @@ Cache for saving python objects based on source code hashes.
 '''
 from __future__ import print_function
 
+from glob import glob
+from hashlib import md5
 import os
 import sys
-import subprocess
+
 from argcomplete import USING_PYTHON2
+
 from .main_script import MAIN_FILE_PATH, get_files_to_hash
 from .main_script import exists as main_script_exists
 
@@ -76,22 +79,24 @@ def _calc_hash():
 
     :return: A string.
     '''
-    if USING_PYTHON2:
-        devnull = open(os.devnull, 'w')
-    else:
-        devnull = subprocess.DEVNULL
-
-    files = ' '.join(get_files_to_hash())
-
+    files = get_files_to_hash()
     old_pwd = os.path.abspath(os.curdir)
     try:
         if MAIN_FILE_PATH is not None:
             os.chdir(os.path.dirname(MAIN_FILE_PATH))
 
-        return subprocess.check_output(
-            r"find {} -type f -\! -name '*.pyc' -print0 | sort -zu | xargs -0 cat | md5sum | awk '{{ print $1 }}'".format(files),
-            shell=True, stderr=devnull).decode().strip()
+        fileset = set()
+
+        for path in files:
+            fileset.add(path)
+            pattern = '{}/**/*.py'.format(path)
+            for filename in glob(pattern, recursive=True):
+                fileset.add(filename)
+
+        packed = ''.join(sorted(fileset)).encode('utf8')
+        m = md5()
+        m.update(packed)
+        return m.hexdigest()
+
     finally:
         os.chdir(old_pwd)
-        if USING_PYTHON2:
-            devnull.close()
