@@ -4,15 +4,8 @@ from functools import wraps, WRAPPER_ASSIGNMENTS
 
 from .parser_cache import save_cache, load_cache
 
-if argcomplete.USING_PYTHON2:
-    # Don't override __doc__ with wraps because it's read-only in python2
-    __CLASS_WRAPPER_ASSIGNMENTS = tuple(filter(lambda attr: attr != '__doc__', WRAPPER_ASSIGNMENTS))
 
-    _ARGPARSE_LOCAL_IDENTITY_NAME = 'identity'
-else:
-    __CLASS_WRAPPER_ASSIGNMENTS = WRAPPER_ASSIGNMENTS
-
-    _ARGPARSE_LOCAL_IDENTITY_NAME = 'ArgumentParser.__init__.<locals>.identity'
+_ARGPARSE_LOCAL_IDENTITY_NAME = 'ArgumentParser.__init__.<locals>.identity'
 
 def identity(string):
     '''
@@ -27,7 +20,7 @@ def cached_complation_finder(completion_finder_cls):
     if not issubclass(completion_finder_cls, argcomplete.CompletionFinder):
         raise TypeError("cached_completion_finder can only be used on classes that derive from CompletionFinder")
 
-    @wraps(completion_finder_cls, assigned=__CLASS_WRAPPER_ASSIGNMENTS, updated=())
+    @wraps(completion_finder_cls, assigned=WRAPPER_ASSIGNMENTS, updated=())
     class CachedCompletionFinder(completion_finder_cls):
         @staticmethod
         def __fix_default_type(argument_parser):
