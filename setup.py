@@ -9,7 +9,7 @@ if os.path.exists(README_PATH):
 
 setuptools.setup(
     name='cachedcomplete',
-    version='1.0.4',
+    version='2.0.0',
     url='https://github.com/Roynecro97/cachedcomplete',
     project_urls={
         "Source Code": 'https://github.com/Roynecro97/cachedcomplete'
@@ -21,7 +21,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     install_requires=[
-        'argcomplete>=1.11.1'
+        'argcomplete>=3.1.6,<4'
     ],
     packages=setuptools.find_packages(exclude=['test']),
     zip_safe=False,
@@ -35,13 +35,12 @@ setuptools.setup(
         'Operating System :: MacOS :: MacOS X',
         'Operating System :: POSIX',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: Implementation :: CPython',
         # 'Programming Language :: Python :: Implementation :: PyPy',
         'Development Status :: 4 - Beta',

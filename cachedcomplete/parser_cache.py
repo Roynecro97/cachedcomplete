@@ -4,17 +4,11 @@ Cache for saving python objects based on source code hashes.
 from __future__ import print_function
 
 import os
+import pickle
 import sys
 import subprocess
-from argcomplete import USING_PYTHON2
 from .main_script import MAIN_FILE_PATH, get_files_to_hash
 from .main_script import exists as main_script_exists
-
-# Use the optimized C version for pickle
-if USING_PYTHON2:
-    import cPickle as pickle
-else:
-    import pickle
 
 
 CACHE_DIR = '/tmp/.cachedcomplete'
@@ -76,11 +70,6 @@ def _calc_hash():
 
     :return: A string.
     '''
-    if USING_PYTHON2:
-        devnull = open(os.devnull, 'w')
-    else:
-        devnull = subprocess.DEVNULL
-
     files = ' '.join(get_files_to_hash())
 
     old_pwd = os.path.abspath(os.curdir)
@@ -90,8 +79,6 @@ def _calc_hash():
 
         return subprocess.check_output(
             r"find {} -type f -\! -name '*.pyc' -print0 | sort -zu | xargs -0 cat | md5sum | awk '{{ print $1 }}'".format(files),
-            shell=True, stderr=devnull).decode().strip()
+            shell=True, stderr=subprocess.DEVNULL).decode().strip()
     finally:
         os.chdir(old_pwd)
-        if USING_PYTHON2:
-            devnull.close()
